@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌭 Bad_Hotdog_Water 🌭</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Satisfy&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #E63946;
+            --yellow: #FFD60A;
+            --mustard: #FCA311;
+            --ketchup: #DC2F02;
+            --cream: #FFF8E7;
+            --brown: #8B4513;
+            --metal: #A8DADC;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+        }
+
+        .stand-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Header Sign */
+        .header-sign {
+            background: var(--red);
+            border: 8px solid var(--yellow);
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            position: relative;
+            animation: neonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--yellow); }
+            50% { box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 40px var(--yellow); }
+        }
+
+        .header-sign h1 {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--yellow);
+            text-shadow: 4px 4px 0 var(--ketchup), 
+                         6px 6px 0 rgba(0,0,0,0.2);
+            letter-spacing: 3px;
+            margin: 0;
+        }
+
+        .header-sign p {
+            font-family: 'Satisfy', cursive;
+            font-size: 1.5rem;
+            color: var(--cream);
+            margin-top: 10px;
+        }
+
+        /* Main Stand */
+        .stand {
+            background: var(--cream);
+            border: 6px solid var(--brown);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .stand {
+                padding: 20px;
+                border-width: 4px;
+            }
+        }
+
+        /* Striped Awning */
+        .awning {
+            position: absolute;
+            top: -40px;
+            left: -10px;
+            right: -10px;
+            height: 50px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--red) 0px,
+                var(--red) 40px,
+                var(--cream) 40px,
+                var(--cream) 80px
+            );
+            border-radius: 20px 20px 0 0;
+            border: 4px solid var(--brown);
+            border-bottom: none;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+        }
+
+        .awning::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 35px,
+                var(--brown) 35px,
+                var(--brown) 45px,
+                transparent 45px,
+                transparent 80px
+            );
+        }
+
+        /* Content Layout */
+        .stand-content {
+            display: grid;
+            grid-template-columns: 250px 1fr 1.2fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .stand-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .pot-section {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stand-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .pot-section {
+                grid-column: 1;
+            }
+        }
+
+        /* Boiling Pot Section */
+        .pot-section {
+            text-align: center;
+        }
+
+        .pot-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ketchup);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .pot-container {
+            position: relative;
+            width: 250px;
+            height: 300px;
+            margin: 0 auto;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .pot-container:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s ease;
+        }
+        
+        .pot-container:active {
+            transform: scale(0.98);
+        }
+
+        .pot {
+            width: 200px;
+            height: 220px;
+            background: linear-gradient(135deg, #4A4A4A 0%, #6B6B6B 50%, #4A4A4A 100%);
+            border-radius: 0 0 40px 40px;
+            margin: 0 auto;
+            position: relative;
+            border: 3px solid #2A2A2A;
+            box-shadow: inset 0 -20px 30px rgba(0,0,0,0.3);
+        }
+
+        .pot::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -10px;
+            right: -10px;
+            height: 20px;
+            background: #5A5A5A;
+            border-radius: 10px;
+            border: 3px solid #2A2A2A;
+        }
+
+        .water {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(180deg, rgba(135,206,235,0.6) 0%, rgba(100,149,237,0.8) 100%);
+            border-radius: 0 0 35px 35px;
+            margin: 15px auto 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            animation: rise 2s ease-in infinite;
+        }
+
+        .bubble:nth-child(1) { left: 20%; width: 10px; height: 10px; animation-delay: 0s; }
+        .bubble:nth-child(2) { left: 50%; width: 8px; height: 8px; animation-delay: 0.5s; }
+        .bubble:nth-child(3) { left: 70%; width: 12px; height: 12px; animation-delay: 1s; }
+        .bubble:nth-child(4) { left: 35%; width: 6px; height: 6px; animation-delay: 1.5s; }
+
+        @keyframes rise {
+            0% { bottom: 0; opacity: 1; }
+            100% { bottom: 180px; opacity: 0; }
+        }
+
+        .hotdog {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            background: linear-gradient(90deg, #D2691E 0%, #CD853F 50%, #D2691E 100%);
+            border-radius: 10px;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .hotdog:nth-child(7) { top: 30px; left: 25px; animation-delay: 0s; }
+        .hotdog:nth-child(8) { top: 60px; left: 70px; animation-delay: 1s; }
+        .hotdog:nth-child(9) { top: 95px; left: 35px; animation-delay: 2s; }
+        .hotdog:nth-child(10) { top: 50px; left: 110px; animation-delay: 0.5s; }
+        .hotdog:nth-child(11) { top: 120px; left: 80px; animation-delay: 1.5s; }
+        
+        .hotdog.jumping {
+            animation: hotdogJump 1s ease-out;
+        }
+        
+        @keyframes hotdogJump {
+            0% { transform: translateY(0) rotate(-5deg) scale(1); }
+            30% { transform: translateY(-150px) rotate(360deg) scale(1.2); }
+            50% { transform: translateY(-180px) rotate(540deg) scale(1.3); }
+            70% { transform: translateY(-100px) rotate(720deg) scale(1.1); }
+            100% { transform: translateY(0) rotate(720deg) scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .steam {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 40px;
+            opacity: 0.3;
+            animation: steamRise 3s ease-in-out infinite;
+        }
+
+        @keyframes steamRise {
+            0% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(1.5); }
+        }
+
+        /* Menu Section */
+        .menu-section {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .menu-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ketchup);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+			text-align: center;
+        }
+
+        .menu-board {
+            background: var(--brown);
+            border: 4px solid var(--mustard);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+            flex: 1;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .menu-item {
+            background: var(--cream);
+            border: 3px solid var(--mustard);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ketchup);
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            background: var(--yellow);
+            transform: translateX(5px);
+            box-shadow: 5px 5px 0 var(--red);
+        }
+
+        .menu-item::before {
+            content: '🌭';
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .menu-item.active {
+            background: var(--mustard);
+            color: white;
+        }
+
+        /* Video Window */
+        .video-window {
+            background: var(--brown);
+            border: 6px solid var(--mustard);
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+            min-height: 400px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-window h3 {
+            font-family: 'Bangers', cursive;
+            color: var(--yellow);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 var(--ketchup);
+        }
+
+        .video-placeholder {
+            background: var(--cream);
+            border: 4px solid var(--mustard);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Satisfy', cursive;
+            font-size: 1.5rem;
+            color: var(--brown);
+            flex: 1;
+        }
+
+        .video-player {
+            width: 100%;
+            border-radius: 10px;
+            border: 4px solid var(--mustard);
+            display: none;
+            flex: 1;
+            min-height: 350px;
+            background: #000;
+            object-fit: contain;
+        }
+
+        .video-player.active {
+            display: block;
+        }
+
+        /* Links Section */
+        .links-section {
+            grid-column: 1 / -1;
+            background: var(--red);
+            border: 5px solid var(--yellow);
+            border-radius: 15px;
+            padding: 8px;
+            text-align: center;
+            margin-top: 0px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .links-section h2 {
+            font-family: 'Bangers', cursive;
+            color: var(--yellow);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 var(--ketchup);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            background: var(--yellow);
+            color: var(--ketchup);
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.1rem;
+            border: 4px solid var(--cream);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .social-link:hover {
+            background: var(--cream);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        
+        .brick-btn {
+            background: #fff;
+            border: 4px solid #000;
+            cursor: pointer;
+        }
+        
+        .brick-btn:hover {
+            background: #000;
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        /* Brick Wall Page */
+        .brick-wall-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .brick-wall-page.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .brick-wall {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #8B4513;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 30px,
+                    rgba(0,0,0,0.15) 30px,
+                    rgba(0,0,0,0.15) 33px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    #A0522D,
+                    #A0522D 100px,
+                    #8B4513 100px,
+                    #8B4513 102px,
+                    #CD853F 102px,
+                    #CD853F 202px,
+                    #8B4513 202px,
+                    #8B4513 204px
+                );
+            background-size: 100% 33px, 204px 66px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.3);
+            filter: brightness(0.7);
+        }
+
+        .character-container {
+            position: absolute;
+            right: 2%;
+            top: 55%;
+            transform: translateY(-50%);
+            z-index: 10;
+            animation: characterEmerge 1s ease-out 1s both;
+        }
+
+        @keyframes characterEmerge {
+            0% {
+                transform: translateY(-50%) translateX(200px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(-50%) translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .character-container.climbing {
+            animation: characterClimb 1.5s ease-in-out both;
+        }
+
+        @keyframes characterClimb {
+            0% {
+                transform: translateY(-50%) translateX(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50%) translateX(150px) scale(0.8) rotate(20deg);
+            }
+            100% {
+                transform: translateY(-50%) translateX(300px) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        .character {
+            font-size: 120px;
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+            animation: characterBob 2s ease-in-out infinite;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .character img {
+            max-width: 200px;
+            max-height: 230px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+        
+        .character:hover {
+            transform: scale(1.1);
+        }
+        
+        .character:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes characterBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .thought-bubble {
+            position: absolute;
+            top: -260px;
+            left: -100px;
+            background: white;
+            border-radius: 50%;
+            width: 280px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: bubbleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes bubbleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.02); }
+        }
+
+        .thought-bubble::before,
+        .thought-bubble::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        .thought-bubble::before {
+            width: 40px;
+            height: 40px;
+            bottom: -30px;
+            right: 80px;
+        }
+
+        .thought-bubble::after {
+            width: 25px;
+            height: 25px;
+            bottom: -50px;
+            right: 60px;
+        }
+
+        .thought-text {
+            font-family: 'Comic Sans MS', 'Satisfy', cursive;
+            font-size: 1.3rem;
+            color: #333;
+            text-align: center;
+            line-height: 1.4;
+            animation: thoughtChange 0.5s ease-in-out;
+        }
+
+        @keyframes thoughtChange {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .return-button {
+            position: absolute;
+            bottom: 40px;
+            left: 90%;
+            transform: translateX(-50%);
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.3rem;
+            background: var(--yellow);
+            color: var(--ketchup);
+            border: 5px solid var(--red);
+            padding: 20px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 20;
+            animation: buttonBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes buttonBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .return-button:hover {
+            background: var(--red);
+            color: var(--yellow);
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        
+        /* Picture Frames on Brick Wall */
+        .picture-frames {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 40%;
+            height: 70%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 30px;
+            z-index: 5;
+        }
+        
+        .picture-frame {
+            background: #654321;
+            border: 8px solid #8B4513;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.3);
+            padding: 10px;
+            position: relative;
+            animation: frameHang 3s ease-in-out infinite;
+        }
+        
+        .picture-frame:nth-child(1) { animation-delay: 0s; }
+        .picture-frame:nth-child(2) { animation-delay: 0.5s; }
+        .picture-frame:nth-child(3) { animation-delay: 1s; }
+        .picture-frame:nth-child(4) { animation-delay: 1.5s; }
+        
+        @keyframes frameHang {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+        
+        .picture-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #333;
+        }
+        
+        .picture-frame::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 20px;
+            background: #333;
+        }
+        
+        /* TV on Brick Wall */
+        .tv-container {
+            position: absolute;
+            top: 8%;
+            right: 20%;
+            width: 480px;
+            height: 340px;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            border: 15px solid #333;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+            z-index: 5;
+            animation: tvGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes tvGlow {
+            0%, 100% { box-shadow: 0 15px 40px rgba(0,0,0,0.7), 0 0 20px rgba(100,149,237,0.3); }
+            50% { box-shadow: 0 15px 40px rgba(0,0,0,0.7), 0 0 40px rgba(100,149,237,0.5); }
+        }
+        
+        .tv-screen {
+            width: 100%;
+            height: 85%;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        
+        .tv-screen video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .tv-static {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,0,0,0.1) 0px,
+                rgba(255,255,255,0.1) 1px,
+                rgba(0,0,0,0.1) 2px
+            );
+            pointer-events: none;
+            animation: staticMove 0.1s linear infinite;
+        }
+        
+        @keyframes staticMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-2px); }
+        }
+        
+        .tv-controls {
+            width: 100%;
+            height: 15%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 15px;
+        }
+        
+        .tv-controls-left,
+        .tv-controls-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tv-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #555 0%, #333 100%);
+            border: 2px solid #222;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .tv-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #888;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        #tvPrevBtn::before {
+            content: '◄';
+        }
+        
+        #tvNextBtn::before {
+            content: '►';
+        }
+        
+        #tvMuteBtn::before {
+            content: '🔇';
+            font-size: 14px;
+        }
+        
+        #tvMuteBtn.muted::before {
+            content: '🔊';
+        }
+        
+        #tvPowerBtn::before {
+            content: '⏻';
+        }
+        
+        .tv-button:hover {
+            background: linear-gradient(135deg, #666 0%, #444 100%);
+            transform: scale(1.1);
+        }
+        
+        .tv-button:active {
+            transform: scale(0.95);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+        }
+        
+        .tv-led {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+            transition: all 0.3s ease;
+        }
+        
+        .tv-led.on {
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            animation: ledBlink 2s ease-in-out infinite;
+        }
+        
+        @keyframes ledBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Flying Brick Animation */
+        .flying-brick {
+            position: fixed;
+            font-size: 60px;
+            z-index: 2000;
+            pointer-events: none;
+            opacity: 0;
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
+        }
+
+        .flying-brick.throwing {
+            animation: brickThrow 1s ease-in-out both;
+        }
+
+        @keyframes brickThrow {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translate(40vw, -20vh) rotate(360deg) scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(80vw, -10vh) rotate(720deg) scale(0.8);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .header-sign h1 {
+                font-size: 3rem;
+            }
+
+            .video-window h3 {
+                font-size: 1.5rem;
+            }
+            
+            .pot-container {
+                width: 150px;
+                height: 200px;
+            }
+            
+            .pot {
+                width: 130px;
+                height: 150px;
+            }
+            
+            .water {
+                width: 110px;
+                height: 110px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-sign h1 {
+                font-size: 2.5rem;
+            }
+
+            .header-sign p {
+                font-size: 1.2rem;
+            }
+            
+            .video-window {
+                min-height: 300px;
+            }
+            
+            .video-player {
+                min-height: 250px;
+            }
+            
+            .menu-board {
+                max-height: none;
+            }
+            
+            .social-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .video-placeholder {
+                font-size: 1.2rem;
+                padding: 20px;
+            }
+            
+            .character {
+                font-size: 80px;
+            }
+            
+            .thought-bubble {
+                width: 220px;
+                height: 160px;
+                top: -140px;
+                left: -80px;
+                padding: 20px;
+            }
+            
+            .thought-text {
+                font-size: 1rem;
+            }
+            
+            .brick-hole {
+                right: 10%;
+                width: 100px;
+                height: 70px;
+            }
+            
+            .return-button {
+                font-size: 1.1rem;
+                padding: 15px 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-sign h1 {
+                font-size: 2rem;
+            }
+            
+            .header-sign p {
+                font-size: 1rem;
+            }
+            
+            .pot-section h2,
+            .menu-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .menu-item {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+            
+            .character {
+                font-size: 60px;
+            }
+            
+            .thought-bubble {
+                width: 180px;
+                height: 130px;
+                top: -110px;
+                left: -60px;
+                padding: 15px;
+            }
+            
+            .thought-text {
+                font-size: 0.85rem;
+            }
+            
+            .flying-brick {
+                font-size: 40px;
+            }
+            
+            .picture-frames {
+                left: 3%;
+                width: 50%;
+                gap: 15px;
+            }
+            
+            .tv-container {
+                width: 250px;
+                height: 200px;
+                left: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stand-container">
+        <div class="header-sign">
+            <h1></h1>
+            <p></p>
+        </div>
+
+        <div class="stand">
+            <div class="awning"></div>
+            
+            <div class="stand-content">
+                <!-- Boiling Pot Section -->
+                <div class="pot-section">
+                    <h2></h2>
+                    <div class="pot-container">
+                        <div class="steam">💨</div>
+                        <div class="pot">
+                            <div class="water">
+                                <div class="bubble"></div>
+                                <div class="bubble"></div>
+                                <div class="bubble"></div>
+                                <div class="bubble"></div>
+                                <div class="bubble"></div>
+                                <div class="bubble"></div>
+                                <div class="hotdog"></div>
+                                <div class="hotdog"></div>
+                                <div class="hotdog"></div>
+                                <div class="hotdog"></div>
+                                <div class="hotdog"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Section -->
+                <div class="menu-section">
+                    <h2></h2>
+                    <!-- 
+                    HOW TO ADD LOCAL VIDEOS:
+                    
+                    1. Create a folder called "Videos" in the same location as this HTML file
+                    2. Put your menu video files in the Videos folder (for the main menu)
+                    3. Create a subfolder "Videos/TV" for TV clips in the brick room
+                    4. Update the CONFIG section at the bottom of this file
+                    
+                    Supported formats: .mp4, .webm, .mov
+                    
+                    Folder structure:
+                    Videos/
+                    ├── classic-frank.mp4      (for menu)
+                    ├── chicago-style.webm     (for menu)
+                    └── TV/
+                        ├── tv-clip1.mp4       (for brick room TV)
+                        └── tv-clip2.mp4       (for brick room TV)
+                    -->
+                    <div class="menu-board">
+                        <!-- Menu items are generated from CONFIG at the top of the script -->
+                    </div>
+                </div>
+
+                <!-- Video Window -->
+                <div class="video-window">
+                    <h3></h3>
+                    <div class="video-placeholder" id="placeholder"></div>
+                    <video id="videoPlayer" class="video-player" controls autoplay>
+                        <source id="videoSource" src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Links Section -->
+                <div class="links-section">
+                    <h2></h2>
+                    <div class="social-links">
+                        <!-- Social links are generated from CONFIG at the top of the script -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Brick Wall Page -->
+    <div id="brickWallPage" class="brick-wall-page hidden">
+        <div class="brick-wall">
+            <div class="brick-hole"></div>
+        </div>
+        
+        <!-- Picture Frames -->
+        <div class="picture-frames">
+            <div class="picture-frame">
+                <img id="frame1" src="Images/default.jpg" alt="Picture 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'%3E%3Crect fill=\'%23333\' width=\'100\' height=\'100\'/%3E%3Ctext fill=\'%23666\' x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' font-size=\'14\'%3ENo Image%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="picture-frame">
+                <img id="frame2" src="Images/default.jpg" alt="Picture 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'%3E%3Crect fill=\'%23333\' width=\'100\' height=\'100\'/%3E%3Ctext fill=\'%23666\' x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' font-size=\'14\'%3ENo Image%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="picture-frame">
+                <img id="frame3" src="Images/default.jpg" alt="Picture 3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'%3E%3Crect fill=\'%23333\' width=\'100\' height=\'100\'/%3E%3Ctext fill=\'%23666\' x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' font-size=\'14\'%3ENo Image%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="picture-frame">
+                <img id="frame4" src="Images/default.jpg" alt="Picture 4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'%3E%3Crect fill=\'%23333\' width=\'100\' height=\'100\'/%3E%3Ctext fill=\'%23666\' x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' font-size=\'14\'%3ENo Image%3C/text%3E%3C/svg%3E'">
+            </div>
+        </div>
+        
+        <!-- TV -->
+        <div class="tv-container">
+            <div class="tv-screen">
+                <video id="tvVideo" autoplay loop muted>
+                    <source id="tvSource" src="" type="video/mp4">
+                </video>
+                <div class="tv-static"></div>
+            </div>
+            <div class="tv-controls">
+                <div class="tv-controls-left">
+                    <div class="tv-button" id="tvPrevBtn" title="Previous Channel"></div>
+                    <div class="tv-button" id="tvNextBtn" title="Next Channel"></div>
+                    <div class="tv-button" id="tvMuteBtn" title="Mute/Unmute"></div>
+                </div>
+                <div class="tv-controls-right">
+                    <div class="tv-button" id="tvPowerBtn" title="Power"></div>
+                    <div class="tv-led" id="tvLed"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-container">
+            <div class="character" id="brickCharacter"></div>
+            <div class="thought-bubble">
+                <div class="thought-text" id="thoughtText"></div>
+            </div>
+        </div>
+        <button id="returnButton" class="return-button"></button>
+    </div>
+
+    <!-- Flying Brick Animation Element -->
+    <div id="flyingBrick" class="flying-brick">🧱</div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // 🌭 HOTDOG STAND CONFIGURATION - EDIT THIS SECTION! 🌭
+        // ═══════════════════════════════════════════════════════════════
+        
+        const CONFIG = {
+            // SITE HEADER
+            siteTitle: "🌭 Bad_Hotdog_Water 🌭",
+            siteSubtitle: "The Best Damn Hotdog On Twitch!",
+            
+            // MENU ITEMS (Videos from root Videos folder)
+            // Add or remove items as needed. Format: { name: "Display Name", video: "Videos/filename.mp4" }
+            // Supported formats: .mp4, .webm, .mov
+            menuItems: [
+                { name: "The Classic Frank",     video: "Videos/[1-27-26]-Crazy_Ahh_Scream.mp4" },
+                { name: "Chicago Style",         video: "Videos/[2-4-26]-WHAT_INSPECTION.mp4" },
+                { name: "Chili Cheese Dog",      video: "Videos/[7-28-23]-Bloodborne_Part_3.mp4" },
+                { name: "The New Yorker",        video: "Videos/[8-11-25]-Hotdog_Gets_Launched.mp4" },
+                { name: "The Southwest Sizzler", video: "Videos/[9-27-25]-He_Found_The_Cheat_Code!!!!!!.mp4" },
+                { name: "Hawaiian Luau Dog",     video: "Videos/[10-9-25]-A_Great_Close_Up.mp4" },
+                { name: "The Mediterranean",     video: "Videos/[10-31-25]-Hotdog_Getting_Consumed_By_A_Hotdog.mp4" },
+                { name: "Breakfast Blast",       video: "Videos/Bro_Doesnt_Exist.mp4" }
+            ],
+            
+            // VIDEO WINDOW
+            videoWindowTitle: "🎬 Step Right Up! 🎬",
+            videoPlaceholder: "Click a menu item above to see what's cookin'!",
+            
+            // SOCIAL LINKS SECTION
+            socialSectionTitle: "Follow Bad_Hotdog_Water!",
+            socialLinks: [
+                { name: "Discord", emoji: "", url: "https://discord.gg/tnah6MD8Qr" },
+                { name: "Twitch", emoji: "", url: "https://www.twitch.tv/bad_hotdog_water" },
+                { name: "YouTube", emoji: "", url: "https://www.youtube.com/@badhotdogwater" },
+                { name: "TikTok", emoji: "", url: "https://tiktok.com/@bad_hotdog_water" },
+				{ name: "More At LinkTree", emoji: "", url: "https://linktr.ee/Bad_HotDog_Water" },
+            ],
+            
+            // BRICK WALL PAGE
+            brickButtonText: "🧱 Visit BRIQ's Room!",
+            returnButtonText: "↩️ Back Home",
+            characterEmoji: "🧱", // Can be any emoji: 🤔 😎 🤠 🥸 🧐 etc.
+            
+            // CHARACTER THOUGHTS (random thoughts that appear in thought bubble)
+characterThoughts: [
+    // Philosophical Hotdog Musings
+    "Why did the hotdog cross the road? 🤔",
+    "Is a hotdog a sandwich? 🌭❓",
+    "The meaning of life is probably a hotdog 🌌",
+    "Time to contemplate my existence...",
+    "Today's forecast: 100% chance of hotdogs. ⛅",
+    
+    // Thoughts About Bad_Hotdog_Water (Friendship)
+    "Bad_Hotdog_Water is my best friend! 🌭✨",
+    "It's nice to just float next to a friend. 😊",
+    "I wonder if Bad_Hotdog_Water needs any help... 💭",
+    "I wonder what Bad_Hotdog_Water is thinking about... 🤔💧",
+    "What would Bad_Hotdog_Water do? 🤔",
+    "Bad_Hotdog_Water gets me. 🫂",
+    
+    // Caught/Flustered Moments
+    "Wait... i didn't mean for you to see those photos",
+    "How long have you been standing there? 😰",
+    "I can explain the Hotdog shrine. It's... artistic appreciation! 🖼️",
+    
+    // Protective & Devoted
+    "I've calculated 1,472 ways to protect you from a fork. 🍴🛡️",
+    "I saved you the last bite of... well, nothing. But the thought was there! 💭",
+    
+    // Home & Personal Space
+    "Ahhh, finally home",
+    "Welcome to my room",
+    "GET OUT OF MY ROOM NOW!!!!!!!",
+    "🚫 NO BOOKREADERS ALLOWED 🚫",
+    
+    // Random Brick Struggles
+    "I'm stuck in a wall! HELP! 😱",
+    "I was just sitting here, being a brick. It's harder than it looks. 🥱"
+],
+            
+            // BRICK WALL IMAGES (for picture frames in the brick room)
+            // List your image files here. Any common image format works: .jpg, .jpeg, .png, .gif, .webp
+            // Random images will be selected from this list to display in the 4 picture frames
+            pictureImages: [
+                "Images/Image1.jpg",
+                "Images/Image2.png",
+                "Images/Image3.png",
+                "Images/Image4.png",
+                "Images/Image5.png",
+                "Images/Image6.png",
+                // Add as many as you want - 4 random ones will be chosen each time
+            ],
+            
+            // TV VIDEOS (for the TV in the brick room - separate from menu videos)
+            // Videos from Videos/TV/ subfolder - these play randomly on the TV
+            // Supported formats: .mp4, .webm, .mov
+            tvVideos: [
+                "Videos/TV/[10-5-25]-Briq.mp4",
+                "Videos/TV/[10-31-25]-Hotdog_Getting_Consumed_By_A_Hotdog.mp4"
+                // Add more TV clips as needed
+            ],
+            
+            // SECTION TITLES
+            potSectionTitle: "Fresh & Hot!",
+            menuSectionTitle: "Menu"
+        };
+        
+        // ═══════════════════════════════════════════════════════════════
+        // END OF CONFIGURATION - Don't edit below unless you know what you're doing!
+        // ═══════════════════════════════════════════════════════════════
+        
+        // Get random thought from config
+        function getRandomThought() {
+            return CONFIG.characterThoughts[Math.floor(Math.random() * CONFIG.characterThoughts.length)];
+        }
+
+        // Change thought periodically
+        let thoughtInterval;
+        function startThoughtCycle() {
+            const thoughtText = document.getElementById('thoughtText');
+            if (thoughtText) {
+                thoughtText.textContent = getRandomThought();
+                
+                thoughtInterval = setInterval(() => {
+                    thoughtText.textContent = getRandomThought();
+                }, 10000);
+            }
+        }
+
+        function stopThoughtCycle() {
+            if (thoughtInterval) {
+                clearInterval(thoughtInterval);
+            }
+        }
+
+        // Apply configuration and initialize everything when page loads
+        window.addEventListener('load', function() {
+            console.log('Applying configuration...');
+            
+            // Update header
+            const headerTitle = document.querySelector('.header-sign h1');
+            const headerSubtitle = document.querySelector('.header-sign p');
+            if (headerTitle) headerTitle.textContent = CONFIG.siteTitle;
+            if (headerSubtitle) headerSubtitle.textContent = CONFIG.siteSubtitle;
+            
+            // Update section titles
+            const potTitle = document.querySelector('.pot-section h2');
+            const menuTitle = document.querySelector('.menu-section h2');
+            const videoTitle = document.querySelector('.video-window h3');
+            const placeholder = document.getElementById('placeholder');
+            const socialTitle = document.querySelector('.links-section h2');
+            
+            if (potTitle) potTitle.textContent = CONFIG.potSectionTitle;
+            if (menuTitle) menuTitle.textContent = CONFIG.menuSectionTitle;
+            if (videoTitle) videoTitle.textContent = CONFIG.videoWindowTitle;
+            if (placeholder) placeholder.textContent = CONFIG.videoPlaceholder;
+            if (socialTitle) socialTitle.textContent = CONFIG.socialSectionTitle;
+            
+            // Update character emoji
+            const character = document.querySelector('.character');
+            if (character) character.textContent = CONFIG.characterEmoji;
+            
+            // Build menu items
+            const menuBoard = document.querySelector('.menu-board');
+            if (menuBoard) {
+                menuBoard.innerHTML = ''; // Clear existing
+                
+                CONFIG.menuItems.forEach(item => {
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item';
+                    menuItem.setAttribute('data-video', item.video);
+                    menuItem.textContent = item.name;
+                    menuBoard.appendChild(menuItem);
+                });
+                
+                console.log('Menu items created:', CONFIG.menuItems.length);
+            }
+            
+            // Build social links
+            const socialLinksContainer = document.querySelector('.social-links');
+            if (socialLinksContainer) {
+                socialLinksContainer.innerHTML = ''; // Clear existing
+                
+                CONFIG.socialLinks.forEach(link => {
+                    const linkElement = document.createElement('a');
+                    linkElement.href = link.url;
+                    linkElement.className = 'social-link';
+                    linkElement.innerHTML = link.emoji + ' ' + link.name;
+                    linkElement.target = '_blank';
+                    socialLinksContainer.appendChild(linkElement);
+                });
+                
+                // Add brick button
+                const brickButton = document.createElement('button');
+                brickButton.id = 'brickButton';
+                brickButton.className = 'social-link brick-btn';
+                brickButton.innerHTML = CONFIG.brickButtonText;
+                socialLinksContainer.appendChild(brickButton);
+                
+                console.log('Social links created:', CONFIG.socialLinks.length);
+            }
+            
+            // Update return button
+            const returnButton = document.getElementById('returnButton');
+            if (returnButton) returnButton.innerHTML = CONFIG.returnButtonText;
+            
+            // Load brick character (image or emoji)
+            const brickCharacter = document.getElementById('brickCharacter');
+            if (brickCharacter) {
+                // Try to load BRIQ.png image
+                const img = new Image();
+                img.src = 'BRIQ.png';
+                img.onerror = function() {
+                    // If image doesn't exist, use emoji
+                    brickCharacter.textContent = '🧱';
+                };
+                img.onload = function() {
+                    // If image loads successfully, use it
+                    brickCharacter.innerHTML = '';
+                    brickCharacter.appendChild(img);
+                };
+            }
+            
+            // Initialize all event listeners after everything is built
+            initializeEventListeners();
+            
+            console.log('Configuration applied successfully!');
+        });
+
+        // Initialize all event listeners
+        function initializeEventListeners() {
+            // Brick throw animation
+            const brickButton = document.getElementById('brickButton');
+            const flyingBrick = document.getElementById('flyingBrick');
+            const brickWallPage = document.getElementById('brickWallPage');
+            const returnButton = document.getElementById('returnButton');
+            const characterContainer = document.querySelector('.character-container');
+
+            if (brickButton) {
+                brickButton.addEventListener('click', function(e) {
+                    // Stop all media on main page before leaving
+                    const videoPlayer = document.getElementById('videoPlayer');
+                    if (videoPlayer) {
+                        videoPlayer.pause();
+                        videoPlayer.currentTime = 0;
+                    }
+                    
+                    // Get button position
+                    const rect = this.getBoundingClientRect();
+                    flyingBrick.style.left = rect.left + 'px';
+                    flyingBrick.style.top = rect.top + 'px';
+                    
+                    // Trigger brick throw animation
+                    flyingBrick.classList.add('throwing');
+                    
+                    // After animation, show brick wall page
+                    setTimeout(() => {
+                        brickWallPage.classList.remove('hidden');
+                        flyingBrick.classList.remove('throwing');
+                        flyingBrick.style.opacity = '0';
+                        startThoughtCycle();
+                        loadRandomImages();
+                        loadRandomTVClip();
+                    }, 1000);
+                });
+            }
+
+            // Return to hotdog stand
+            if (returnButton) {
+                returnButton.addEventListener('click', function() {
+                    // Stop all media on brick wall page before leaving
+                    const tvVideo = document.getElementById('tvVideo');
+                    if (tvVideo) {
+                        tvVideo.pause();
+                        tvVideo.currentTime = 0;
+                    }
+                    
+                    stopThoughtCycle();
+                    
+                    // Trigger character climb animation
+                    characterContainer.classList.add('climbing');
+                    
+                    // After climb animation, hide brick wall page
+                    setTimeout(() => {
+                        brickWallPage.classList.add('hidden');
+                        characterContainer.classList.remove('climbing');
+                    }, 1500);
+                });
+            }
+
+            // Menu item click handling
+            const menuItems = document.querySelectorAll('.menu-item');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoSource = document.getElementById('videoSource');
+            const placeholder = document.getElementById('placeholder');
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Get video URL from data attribute
+                    const videoUrl = this.getAttribute('data-video');
+                    
+                    // Show video player and hide placeholder
+                    if (placeholder) placeholder.style.display = 'none';
+                    if (videoPlayer) videoPlayer.classList.add('active');
+                    
+                    // Update video source and reload
+                    if (videoSource) {
+                        videoSource.src = videoUrl;
+                        
+                        // Detect video type from extension
+                        const extension = videoUrl.split('.').pop().toLowerCase();
+                        if (extension === 'webm') {
+                            videoSource.type = 'video/webm';
+                        } else if (extension === 'mov') {
+                            videoSource.type = 'video/quicktime';
+                        } else {
+                            videoSource.type = 'video/mp4';
+                        }
+                        
+                        videoPlayer.load();
+                        videoPlayer.play().catch(e => console.log('Video play error:', e));
+                    }
+                });
+            });
+            
+            // POT CLICKING - Make hotdogs jump!
+            const potContainer = document.querySelector('.pot-container');
+            if (potContainer) {
+                potContainer.addEventListener('click', function() {
+                    const hotdogs = document.querySelectorAll('.hotdog');
+                    hotdogs.forEach((hotdog, index) => {
+                        setTimeout(() => {
+                            hotdog.classList.add('jumping');
+                            setTimeout(() => {
+                                hotdog.classList.remove('jumping');
+                            }, 1000);
+                        }, index * 150); // Stagger the jumps
+                    });
+                });
+            }
+            
+            // CHARACTER CLICKING - Change thought on click
+            const brickCharacter = document.getElementById('brickCharacter');
+            if (brickCharacter) {
+                brickCharacter.addEventListener('click', function() {
+                    const thoughtText = document.getElementById('thoughtText');
+                    if (thoughtText) {
+                        thoughtText.textContent = getRandomThought();
+                        // Add a little animation
+                        thoughtText.style.animation = 'none';
+                        setTimeout(() => {
+                            thoughtText.style.animation = 'thoughtChange 0.5s ease-in-out';
+                        }, 10);
+                    }
+                });
+            }
+            
+            // TV PREVIOUS CHANNEL BUTTON
+            const tvPrevBtn = document.getElementById('tvPrevBtn');
+            if (tvPrevBtn) {
+                tvPrevBtn.addEventListener('click', function() {
+                    loadRandomTVClip();
+                });
+            }
+            
+            // TV NEXT CHANNEL BUTTON
+            const tvNextBtn = document.getElementById('tvNextBtn');
+            if (tvNextBtn) {
+                tvNextBtn.addEventListener('click', function() {
+                    loadRandomTVClip();
+                });
+            }
+            
+            // TV MUTE BUTTON
+            const tvMuteBtn = document.getElementById('tvMuteBtn');
+            const tvVideo = document.getElementById('tvVideo');
+            if (tvMuteBtn && tvVideo) {
+                tvMuteBtn.addEventListener('click', function() {
+                    tvVideo.muted = !tvVideo.muted;
+                    if (tvVideo.muted) {
+                        tvMuteBtn.classList.remove('muted');
+                    } else {
+                        tvMuteBtn.classList.add('muted');
+                    }
+                });
+            }
+            
+            // TV POWER BUTTON - Toggle TV on/off
+            const tvPowerBtn = document.getElementById('tvPowerBtn');
+            const tvLed = document.getElementById('tvLed');
+            let tvPowered = true;
+            
+            if (tvPowerBtn && tvVideo && tvLed) {
+                // Set initial state (on)
+                tvLed.classList.add('on');
+                
+                tvPowerBtn.addEventListener('click', function() {
+                    tvPowered = !tvPowered;
+                    if (tvPowered) {
+                        tvVideo.play();
+                        tvVideo.style.opacity = '1';
+                        tvLed.classList.add('on');
+                    } else {
+                        tvVideo.pause();
+                        tvVideo.style.opacity = '0';
+                        tvLed.classList.remove('on');
+                    }
+                });
+            }
+            
+            console.log('Event listeners initialized. Menu items:', menuItems.length);
+        }
+        
+        // Load random images into picture frames
+        function loadRandomImages() {
+            if (CONFIG.pictureImages && CONFIG.pictureImages.length > 0) {
+                // Shuffle and take 4 random images
+                const shuffled = [...CONFIG.pictureImages].sort(() => 0.5 - Math.random());
+                const selected = shuffled.slice(0, 4);
+                
+                for (let i = 0; i < 4; i++) {
+                    const frame = document.getElementById('frame' + (i + 1));
+                    if (frame && selected[i]) {
+                        frame.src = selected[i];
+                    }
+                }
+            }
+        }
+        
+        // Load random TV clip
+        function loadRandomTVClip() {
+            if (CONFIG.tvVideos && CONFIG.tvVideos.length > 0) {
+                const randomClipPath = CONFIG.tvVideos[Math.floor(Math.random() * CONFIG.tvVideos.length)];
+                const tvSource = document.getElementById('tvSource');
+                const tvVideo = document.getElementById('tvVideo');
+                
+                if (tvSource && tvVideo && randomClipPath) {
+                    tvSource.src = randomClipPath;
+                    
+                    // Detect video type
+                    const extension = randomClipPath.split('.').pop().toLowerCase();
+                    if (extension === 'webm') {
+                        tvSource.type = 'video/webm';
+                    } else if (extension === 'mov') {
+                        tvSource.type = 'video/quicktime';
+                    } else {
+                        tvSource.type = 'video/mp4';
+                    }
+                    
+                    tvVideo.load();
+                    tvVideo.play().catch(e => console.log('TV play error:', e));
+                }
+            }
+        }
+    </script>
+</body>
+</html>
