@@ -1847,6 +1847,75 @@ characterThoughts: [
             }
             
             console.log('Event listeners initialized. Menu items:', menuItems.length);
+
+            // 🥚 HotDog CODE EASTER EGG 🥚
+            // ↑ ↑ ↓ ↓ ← → ← → B A  →  opens pushups.html
+            const HotDog = [
+                'ArrowUp','ArrowUp',
+                'ArrowDown','ArrowDown',
+                'ArrowLeft','ArrowRight',
+                'ArrowLeft','ArrowRight',
+                'b','a'
+            ];
+            let HotDogProgress = 0;
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === HotDog[HotDogProgress]) {
+                    HotDogProgress++;
+                    if (HotDogProgress === HotDog.length) {
+                        HotDogProgress = 0;
+                        triggerEasterEgg();
+                    }
+                } else {
+                    // Allow restart if first key matches
+                    HotDogProgress = (e.key === HotDog[0]) ? 1 : 0;
+                }
+            });
+
+            function triggerEasterEgg() {
+                // Flash overlay effect
+                const flash = document.createElement('div');
+                flash.style.cssText = `
+                    position: fixed; inset: 0; z-index: 99999;
+                    background: var(--yellow);
+                    display: flex; flex-direction: column;
+                    align-items: center; justify-content: center;
+                    font-family: 'Bangers', cursive;
+                    font-size: 3.5rem; color: var(--ketchup);
+                    text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+                    letter-spacing: 3px;
+                    animation: HotDogFlash 1.4s ease forwards;
+                    pointer-events: none;
+                `;
+                flash.innerHTML = `
+                    <div>🎮 HotDog CODE! 🎮</div>
+                    <div style="font-size:1.6rem; margin-top:12px; color:#222; font-family:'Satisfy',cursive;">
+                        opening secret page…
+                    </div>
+                `;
+
+                // Inject keyframe if not already present
+                if (!document.getElementById('HotDogStyle')) {
+                    const style = document.createElement('style');
+                    style.id = 'HotDogStyle';
+                    style.textContent = `
+                        @keyframes HotDogFlash {
+                            0%   { opacity: 0; transform: scale(0.8); }
+                            15%  { opacity: 1; transform: scale(1.05); }
+                            75%  { opacity: 1; transform: scale(1); }
+                            100% { opacity: 0; transform: scale(1.1); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+
+                document.body.appendChild(flash);
+
+                setTimeout(() => {
+                    window.open('pushups.html', '_blank');
+                    flash.remove();
+                }, 1400);
+            }
         }
         
         // Load random images into picture frames
