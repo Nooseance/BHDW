@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🌭 Pushup Bonanza</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#020408;--cyan:#00f5ff;--pink:#ff006e;--yellow:#ffee00;--green:#39ff14;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-family:'Orbitron',monospace;color:var(--cyan);user-select:none;touch-action:none;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.13) 2px,rgba(0,0,0,.13) 4px);pointer-events:none;z-index:99;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.75) 100%);pointer-events:none;z-index:98;}
+
+#wrap{width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;}
+
+header{text-align:center;padding:clamp(12px,2.5vh,24px) 0 clamp(6px,1.2vh,14px);flex-shrink:0;}
+h1{font-size:clamp(20px,4vw,42px);font-weight:900;letter-spacing:.15em;color:var(--cyan);text-shadow:0 0 10px var(--cyan),0 0 30px var(--cyan),0 0 60px rgba(0,245,255,.4);animation:glow 2.5s ease-in-out infinite;}
+.sub{font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.4vw,12px);letter-spacing:.3em;opacity:.4;margin-top:4px;}
+@keyframes glow{0%,100%{text-shadow:0 0 10px var(--cyan),0 0 30px var(--cyan),0 0 60px rgba(0,245,255,.4);}50%{text-shadow:0 0 16px var(--cyan),0 0 50px var(--cyan),0 0 80px rgba(0,245,255,.6);}}
+
+/* Main play area */
+#main{flex:1;display:flex;align-items:center;justify-content:center;gap:clamp(16px,3vw,36px);padding:0 clamp(12px,3vw,30px);min-height:0;flex-wrap:wrap;}
+
+/* Game canvas */
+#game-area{
+  background:linear-gradient(180deg,rgba(0,10,20,.9) 0%,rgba(0,6,14,.9) 60%,rgba(0,20,8,.9) 60%,rgba(0,14,6,.9) 100%);
+  border:1.5px solid rgba(0,245,255,.25);
+  box-shadow:0 0 20px rgba(0,245,255,.08),inset 0 0 40px rgba(0,0,0,.5);
+  border-radius:12px;
+  width:min(400px,82vw);height:min(250px,38vw,38vh);
+  position:relative;overflow:hidden;cursor:pointer;flex-shrink:0;
+}
+
+/* Grid lines inside game area */
+#game-area::before{
+  content:'';position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(0,245,255,.04) 39px,rgba(0,245,255,.04) 40px),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(0,245,255,.04) 39px,rgba(0,245,255,.04) 40px);
+  pointer-events:none;
+}
+
+/* Ground line */
+#game-area::after{content:'';position:absolute;bottom:46px;left:0;right:0;height:1px;background:rgba(0,245,255,.12);}
+
+/* Shadow */
+#shadow{position:absolute;bottom:46px;left:50%;transform:translateX(-50%);width:min(100px,22vw);height:10px;background:rgba(0,245,255,.12);border-radius:50%;filter:blur(4px);transition:all .12s ease;}
+#shadow.compressed{width:min(120px,26vw);height:7px;bottom:26px;}
+
+/* Hotdog wrapper */
+#hotdog-wrapper{
+  position:absolute;bottom:50px;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;
+  transition:bottom .12s cubic-bezier(.25,.46,.45,.94);
+}
+#hotdog-wrapper.down{bottom:26px;}
+
+.hotdog{position:relative;width:min(130px,28vw);height:min(56px,12vw);}
+
+.bun-top{
+  position:absolute;top:0;left:0;right:0;height:48%;
+  background:radial-gradient(ellipse at 50% 40%,#F0A858 0%,#D4853A 60%,#A0622A 100%);
+  border-radius:70px 70px 0 0;
+}
+.seed{position:absolute;width:5px;height:2px;background:#C8892A;border-radius:50%;}
+.seed:nth-child(1){top:5px;left:22%;}
+.seed:nth-child(2){top:3px;left:42%;}
+.seed:nth-child(3){top:5px;left:62%;}
+.seed:nth-child(4){top:8px;left:78%;}
+
+.sausage{
+  position:absolute;top:27%;left:6%;right:6%;height:46%;
+  background:radial-gradient(ellipse at 40% 35%,#D4785A 0%,#B85C38 70%,#8B3A20 100%);
+  border-radius:12px;
+}
+.mustard-line{position:absolute;top:34%;left:12%;right:12%;height:14%;z-index:5;}
+.mustard-line svg{width:100%;height:100%;}
+
+.bun-bottom{
+  position:absolute;bottom:0;left:0;right:0;height:34%;
+  background:radial-gradient(ellipse at 50% 60%,#E09848 0%,#A0622A 100%);
+  border-radius:0 0 70px 70px;
+}
+
+.arms{position:absolute;top:34%;left:-22%;right:-22%;height:30%;pointer-events:none;}
+.arm{
+  position:absolute;width:min(26px,5.5vw);height:11px;
+  background:radial-gradient(ellipse,#E09848 0%,#A0622A 100%);
+  border-radius:6px;top:0;transition:transform .12s ease;
+}
+.arm.left{left:0;transform-origin:right center;transform:rotate(-20deg);}
+.arm.right{right:0;transform-origin:left center;transform:rotate(20deg);}
+#hotdog-wrapper.down .arm.left{transform:rotate(40deg) translateY(3px);}
+#hotdog-wrapper.down .arm.right{transform:rotate(-40deg) translateY(3px);}
+
+.eyes{position:absolute;top:8%;left:50%;transform:translateX(-50%);display:flex;gap:min(18px,4vw);z-index:20;}
+.eye{width:min(9px,2vw);height:min(9px,2vw);background:#2C1810;border-radius:50%;position:relative;animation:eyeblink 4s ease-in-out infinite;transition:transform .12s ease;}
+.eye::after{content:'';position:absolute;width:3px;height:3px;background:white;border-radius:50%;top:1px;left:1px;}
+@keyframes eyeblink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+#hotdog-wrapper.down .eye{transform:scaleY(.6);}
+
+/* Clouds */
+.cloud{position:absolute;background:rgba(0,245,255,.06);border-radius:40px;}
+.cloud::before,.cloud::after{content:'';background:rgba(0,245,255,.06);border-radius:50%;position:absolute;}
+.cloud1{width:60px;height:18px;top:16px;left:18px;animation:floatc 14s linear infinite;}
+.cloud1::before{width:26px;height:26px;top:-14px;left:8px;}
+.cloud1::after{width:20px;height:20px;top:-10px;left:28px;}
+.cloud2{width:44px;height:14px;top:34px;right:24px;animation:floatc 20s linear infinite reverse;}
+.cloud2::before{width:20px;height:20px;top:-11px;left:6px;}
+.cloud2::after{width:15px;height:15px;top:-8px;left:20px;}
+@keyframes floatc{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
+
+/* Coach */
+#coach-area{
+  display:flex;flex-direction:column;align-items:center;gap:0;
+  flex-shrink:0;width:min(130px,26vw);
+}
+
+#speech{
+  background:rgba(0,0,0,.8);border:1.5px solid rgba(0,245,255,.4);
+  border-radius:10px;padding:8px 10px;width:100%;
+  text-align:center;font-family:'Share Tech Mono',monospace;
+  font-size:clamp(8px,1.3vw,11px);color:var(--cyan);line-height:1.45;
+  position:relative;margin-bottom:10px;
+  opacity:0;transform:scale(.85) translateY(4px);
+  transition:opacity .22s ease,transform .22s ease;pointer-events:none;
+  box-shadow:0 0 12px rgba(0,245,255,.15);
+}
+#speech.visible{opacity:1;transform:scale(1) translateY(0);}
+#speech::after{content:'';position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid rgba(0,245,255,.4);}
+
+#coach-circle{
+  width:min(90px,18vw);height:min(90px,18vw);border-radius:50%;
+  border:2px solid rgba(0,245,255,.4);
+  box-shadow:0 0 16px rgba(0,245,255,.2),0 0 30px rgba(0,245,255,.1);
+  overflow:hidden;background:rgba(0,245,255,.05);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:min(2.5rem,7vw);
+  animation:coachidle 3s ease-in-out infinite;
+}
+#coach-circle.pumped{animation:coachpump .4s ease-out !important;}
+@keyframes coachidle{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}
+@keyframes coachpump{0%{transform:scale(1)}30%{transform:scale(1.2) rotate(-4deg)}65%{transform:scale(.95) rotate(2deg)}100%{transform:scale(1) rotate(0)}}
+.coach-label{font-family:'Share Tech Mono',monospace;font-size:clamp(7px,1.1vw,9px);letter-spacing:.25em;opacity:.45;margin-top:7px;}
+
+/* Bottom UI */
+#ui-panel{display:flex;align-items:center;gap:clamp(12px,2.5vw,24px);flex-shrink:0;padding:clamp(8px,1.5vh,14px) 0;flex-wrap:wrap;justify-content:center;}
+
+.counter-box{
+  background:rgba(0,0,0,.6);border:1.5px solid rgba(0,245,255,.35);
+  padding:clamp(8px,1.5vw,14px) clamp(16px,3vw,30px);text-align:center;
+}
+.counter-label{font-size:clamp(8px,1.2vw,10px);letter-spacing:.3em;opacity:.4;margin-bottom:4px;}
+.counter-num{font-size:clamp(36px,7vw,68px);font-weight:900;line-height:1;color:var(--cyan);text-shadow:0 0 10px var(--cyan),0 0 30px rgba(0,245,255,.5);}
+.counter-num.pop{animation:pop .2s ease-out;}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.35);color:var(--yellow)}100%{transform:scale(1)}}
+
+.reset-btn{
+  padding:12px 24px;border:2px solid var(--pink);background:transparent;
+  color:var(--pink);font-family:'Orbitron',monospace;font-size:clamp(10px,1.6vw,14px);
+  font-weight:700;letter-spacing:.15em;cursor:pointer;
+  box-shadow:0 0 8px var(--pink),0 0 20px rgba(255,0,110,.3);
+  transition:all .2s;
+}
+.reset-btn:hover{background:rgba(255,0,110,.08);}
+
+.hint{font-family:'Share Tech Mono',monospace;font-size:clamp(8px,1.3vw,11px);opacity:.35;letter-spacing:.15em;text-align:center;animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:.35}50%{opacity:.55}}
+
+.home-link{font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.4vw,12px);color:var(--cyan);opacity:.3;text-decoration:none;letter-spacing:.2em;transition:opacity .2s;}
+.home-link:hover{opacity:.7;}
+
+/* Milestone */
+#milestone{
+  position:fixed;top:45%;left:50%;transform:translate(-50%,-50%) scale(0);
+  font-size:clamp(20px,5vw,42px);font-weight:900;color:var(--yellow);
+  text-shadow:0 0 12px var(--yellow),0 0 30px var(--yellow);
+  pointer-events:none;z-index:200;text-align:center;
+}
+#milestone.show{animation:mstone 1.2s ease-out forwards;}
+@keyframes mstone{0%{transform:translate(-50%,-50%) scale(0) rotate(-10deg);opacity:1}30%{transform:translate(-50%,-50%) scale(1.1) rotate(3deg);opacity:1}60%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}85%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}100%{transform:translate(-50%,-50%) scale(.8) rotate(5deg);opacity:0}}
+
+.particle{position:fixed;pointer-events:none;font-size:1.5rem;z-index:150;animation:pfx 1s ease-out forwards;}
+@keyframes pfx{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <header>
+    <h1>🌭 PUSHUP BONANZA</h1>
+    <div class="sub">SPACE or TAP to pump iron</div>
+  </header>
+
+  <div id="main">
+    <!-- Game area -->
+    <div id="game-area">
+      <div class="cloud cloud1"></div>
+      <div class="cloud cloud2"></div>
+      <div id="shadow"></div>
+      <div id="hotdog-wrapper">
+        <div class="hotdog">
+          <div class="bun-top">
+            <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+            <div class="seed"></div><div class="seed"></div><div class="seed"></div><div class="seed"></div>
+          </div>
+          <div class="mustard-line">
+            <svg viewBox="0 0 110 8" preserveAspectRatio="none">
+              <path d="M0,4 Q14,1 28,4 Q42,7 56,4 Q70,1 84,4 Q98,7 110,4" fill="none" stroke="#F5C518" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="sausage"></div>
+          <div class="bun-bottom"></div>
+          <div class="arms"><div class="arm left"></div><div class="arm right"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coach -->
+    <div id="coach-area">
+      <div id="speech">Ready to grind! 💪</div>
+      <div id="coach-circle">🏋️</div>
+      <div class="coach-label">COACH BRIQ</div>
+    </div>
+  </div>
+
+  <div id="ui-panel">
+    <div class="counter-box">
+      <div class="counter-label">PUSHUPS</div>
+      <div class="counter-num" id="counter">0</div>
+    </div>
+    <button class="reset-btn" id="resetBtn">⟳ RESET</button>
+  </div>
+
+  <div class="hint">SPACEBAR or tap the arena to do a pushup!</div>
+  <div style="padding-bottom:12px;margin-top:6px;"><a class="home-link" href="launcher.html">← ARCADE</a></div>
+</div>
+
+<div id="milestone"></div>
+
+<script>
+const hotdog=document.getElementById('hotdog-wrapper');
+const shadow=document.getElementById('shadow');
+const counterEl=document.getElementById('counter');
+const milestoneEl=document.getElementById('milestone');
+const bubble=document.getElementById('speech');
+const coachCircle=document.getElementById('coach-circle');
+
+// ── Image loading ──────────────────────────────────────────────────────────
+// Drop Images/pushups_coach.png next to this HTML file to replace the emoji.
+// The image is displayed inside the existing coach circle (90×90px round div).
+// If the file is missing, falls back to the 🏋️ emoji automatically.
+(function(){
+  const img = new Image();
+  img.onload = () => {
+    coachCircle.textContent = '';        // remove emoji
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+    coachCircle.appendChild(img);
+  };
+  img.src = 'Images/pushups_coach.png'; // silently ignored on error
+})();
+
+let count=0,isDown=false,bubbleTimer=null;
+
+const idleLines=["Ready to grind! 💪","Let's GET IT! 🔥","Hotdogs don't quit! 🌭","I believe in you! ⚡","Stay focused! 👀","You were BORN for this! 🌟","Hit that spacebar! 🎮","Warm those buns up! 🌭🔥"];
+const repLines=["NICE REP! 💪","Keep pushin'! 🔥","That's the one! 🌭","FEEL THE BURN! 😤","Beautiful form! ✨","Don't stop now! ⚡","YES! Again! 🎯","Sizzlin'! 🔥","You're on FIRE! 🌭🔥","INCREDIBLE! 💥","More! MORE! 😤","That's my athlete! 🏆"];
+const milestoneCoach={1:"FIRST ONE! Don't stop! 🔥",5:"5 reps! Warming up! 🌭",10:"10 PUSHUPS! This dog CAN COOK! 🍳",25:"25?! BEAST MODE!! 🐉",50:"FIFTY REPS?! INSANE! 🤯",100:"100!!! ABSOLUTE LEGEND! 👑🌭"};
+
+function showBubble(text,dur=2200){clearTimeout(bubbleTimer);bubble.textContent=text;bubble.classList.add('visible');bubbleTimer=setTimeout(()=>bubble.classList.remove('visible'),dur);}
+function pumpCoach(){coachCircle.classList.remove('pumped');void coachCircle.offsetWidth;coachCircle.classList.add('pumped');setTimeout(()=>coachCircle.classList.remove('pumped'),500);}
+
+setInterval(()=>{if(!isDown&&count===0)showBubble(idleLines[Math.floor(Math.random()*idleLines.length)],2600);},6000);
+setTimeout(()=>showBubble("Alright, let's GO! 🌭💪",3000),900);
+
+function doDown(){if(isDown)return;isDown=true;hotdog.classList.add('down');shadow.classList.add('compressed');}
+function doUp(){
+  if(!isDown)return;isDown=false;hotdog.classList.remove('down');shadow.classList.remove('compressed');
+  count++;
+  counterEl.textContent=count;
+  counterEl.classList.remove('pop');void counterEl.offsetWidth;counterEl.classList.add('pop');
+  spawnParticles();pumpCoach();
+  if(milestoneCoach[count]){showBubble(milestoneCoach[count],3200);showMilestone(getMilestone(count));}
+  else showBubble(repLines[Math.floor(Math.random()*repLines.length)],1800);
+}
+
+function getMilestone(n){const t={1:"Let's GO! 💪",5:"5 REPS! 🔥",10:"10 PUSHUPS! 🌭💪",25:"BEAST MODE! 🏋️",50:"50!!! ARE YOU SERIOUS?! 🤯",100:"100 PUSHUPS! LEGENDARY! 👑"};return t[n]||'';}
+function showMilestone(text){if(!text)return;milestoneEl.textContent=text;milestoneEl.classList.remove('show');void milestoneEl.offsetWidth;milestoneEl.classList.add('show');setTimeout(()=>milestoneEl.classList.remove('show'),1300);}
+
+function spawnParticles(){
+  const rect=hotdog.getBoundingClientRect();
+  const emojis=['🌭','💪','🔥','⚡','✨'];
+  for(let i=0;i<5;i++){
+    const p=document.createElement('div');p.className='particle';
+    p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    const dx=(Math.random()-.5)*200,dy=-(Math.random()*150+50);
+    p.style.cssText=`left:${rect.left+rect.width/2}px;top:${rect.top}px;--dx:${dx}px;--dy:${dy}px;animation-delay:${Math.random()*.2}s`;
+    document.body.appendChild(p);setTimeout(()=>p.remove(),1200);
+  }
+}
+
+function reset(){
+  count=0;counterEl.textContent='0';
+  hotdog.classList.remove('down');shadow.classList.remove('compressed');isDown=false;
+  pumpCoach();showMilestone('Reset! 💔');showBubble("Okay! From the TOP! 😤🌭",2800);
+}
+
+document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();doDown();}});
+document.addEventListener('keyup',e=>{if(e.code==='Space'){e.preventDefault();doUp();}});
+
+const gameArea=document.getElementById('game-area');
+gameArea.addEventListener('mousedown',doDown);gameArea.addEventListener('mouseup',doUp);
+gameArea.addEventListener('touchstart',e=>{e.preventDefault();doDown();},{passive:false});
+gameArea.addEventListener('touchend',e=>{e.preventDefault();doUp();},{passive:false});
+document.getElementById('resetBtn').addEventListener('click',reset);
+</script>
+</body>
+</html>

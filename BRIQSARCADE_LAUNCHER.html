@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRIQ'S ARCADE</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#020408;--cyan:#00f5ff;--pink:#ff006e;--yellow:#ffee00;
+  --green:#39ff14;--purple:#bf5fff;--orange:#ff8c00;--blue:#4488ff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;min-height:100%;background:var(--bg);font-family:'Orbitron',monospace;color:var(--cyan);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.1) 2px,rgba(0,0,0,.1) 4px);pointer-events:none;z-index:900;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.8) 100%);pointer-events:none;z-index:899;}
+
+#bg-grid{position:fixed;inset:0;z-index:0;overflow:hidden;}
+#bg-grid canvas{position:absolute;inset:0;}
+
+#page{
+  position:relative;z-index:10;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  padding:clamp(24px,5vh,60px) clamp(14px,3vw,36px) clamp(36px,7vh,70px);
+  gap:clamp(24px,4.5vh,50px);
+}
+
+/* Header */
+header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.logo{
+  font-size:clamp(44px,10vw,100px);font-weight:900;letter-spacing:.25em;line-height:1;
+  color:var(--cyan);text-shadow:0 0 10px var(--cyan),0 0 30px var(--cyan),0 0 60px rgba(0,245,255,.5);
+  animation:logoGlow 3s ease-in-out infinite;
+}
+.logo span{color:var(--pink);text-shadow:0 0 10px var(--pink),0 0 30px var(--pink),0 0 60px rgba(255,0,110,.5);}
+.tagline{font-family:'Share Tech Mono',monospace;font-size:clamp(10px,1.8vw,14px);letter-spacing:.5em;opacity:.4;}
+.insert-coin{font-family:'Share Tech Mono',monospace;font-size:clamp(10px,1.6vw,13px);letter-spacing:.3em;color:var(--yellow);text-shadow:0 0 8px var(--yellow);animation:blink 1.2s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes logoGlow{0%,100%{text-shadow:0 0 10px var(--cyan),0 0 30px var(--cyan),0 0 60px rgba(0,245,255,.5);}50%{text-shadow:0 0 20px var(--cyan),0 0 50px var(--cyan),0 0 100px rgba(0,245,255,.4);}}
+
+.divider{width:clamp(180px,50vw,400px);height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.3;}
+
+/* Section label */
+.section-label{font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.4vw,12px);letter-spacing:.5em;opacity:.3;align-self:flex-start;max-width:900px;width:100%;}
+
+/* Game grid */
+#game-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(clamp(220px,30vw,280px),1fr));
+  gap:clamp(14px,2.5vw,28px);
+  width:100%;max-width:900px;
+}
+
+/* Cards */
+.game-card{
+  position:relative;border:1.5px solid;padding:clamp(18px,3vw,28px) clamp(16px,2.5vw,26px);
+  cursor:pointer;text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;gap:clamp(10px,1.8vh,16px);
+  background:rgba(0,0,0,.5);
+  transition:transform .25s,box-shadow .25s,background .25s;
+  overflow:hidden;backdrop-filter:blur(4px);
+}
+.game-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,.04) 100%);}
+.game-card:hover::before{opacity:1;}
+.game-card:hover{transform:translateY(-4px) scale(1.01);}
+.game-card:active{transform:scale(.98);}
+
+/* Per-card accent colors */
+.c-cyan{border-color:rgba(0,245,255,.4);}   .c-cyan:hover{box-shadow:0 0 28px rgba(0,245,255,.18),0 8px 40px rgba(0,0,0,.5);background:rgba(0,245,255,.04);}
+.c-pink{border-color:rgba(255,0,110,.4);}   .c-pink:hover{box-shadow:0 0 28px rgba(255,0,110,.18),0 8px 40px rgba(0,0,0,.5);background:rgba(255,0,110,.04);}
+.c-green{border-color:rgba(57,255,20,.4);}  .c-green:hover{box-shadow:0 0 28px rgba(57,255,20,.18),0 8px 40px rgba(0,0,0,.5);background:rgba(57,255,20,.04);}
+.c-yellow{border-color:rgba(255,238,0,.4);} .c-yellow:hover{box-shadow:0 0 28px rgba(255,238,0,.18),0 8px 40px rgba(0,0,0,.5);background:rgba(255,238,0,.04);}
+.c-purple{border-color:rgba(191,95,255,.4);}.c-purple:hover{box-shadow:0 0 28px rgba(191,95,255,.18),0 8px 40px rgba(0,0,0,.5);background:rgba(191,95,255,.04);}
+.c-orange{border-color:rgba(255,140,0,.4);} .c-orange:hover{box-shadow:0 0 28px rgba(255,140,0,.18),0 8px 40px rgba(0,0,0,.5);background:rgba(255,140,0,.04);}
+.c-blue{border-color:rgba(68,136,255,.4);}  .c-blue:hover{box-shadow:0 0 28px rgba(68,136,255,.18),0 8px 40px rgba(0,0,0,.5);background:rgba(68,136,255,.04);}
+
+/* Preview canvas area */
+.card-preview{width:100%;aspect-ratio:16/9;border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;flex-shrink:0;background:#000;}
+.card-preview canvas{position:absolute;inset:0;width:100%;height:100%;}
+.preview-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(32px,5vw,48px);opacity:.6;}
+
+.card-title{font-size:clamp(18px,3.5vw,28px);font-weight:900;letter-spacing:.18em;line-height:1;}
+.c-cyan   .card-title{color:var(--cyan); text-shadow:0 0 8px var(--cyan),0 0 18px rgba(0,245,255,.4);}
+.c-pink   .card-title{color:var(--pink); text-shadow:0 0 8px var(--pink),0 0 18px rgba(255,0,110,.4);}
+.c-green  .card-title{color:var(--green);text-shadow:0 0 8px var(--green),0 0 18px rgba(57,255,20,.4);}
+.c-yellow .card-title{color:var(--yellow);text-shadow:0 0 8px var(--yellow),0 0 18px rgba(255,238,0,.4);}
+.c-purple .card-title{color:var(--purple);text-shadow:0 0 8px var(--purple),0 0 18px rgba(191,95,255,.4);}
+.c-orange .card-title{color:var(--orange);text-shadow:0 0 8px var(--orange),0 0 18px rgba(255,140,0,.4);}
+.c-blue   .card-title{color:var(--blue);  text-shadow:0 0 8px var(--blue),0 0 18px rgba(68,136,255,.4);}
+
+.card-desc{font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.4vw,12px);letter-spacing:.08em;opacity:.5;line-height:1.65;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
+.card-tag{font-family:'Share Tech Mono',monospace;font-size:clamp(8px,1.2vw,10px);letter-spacing:.2em;opacity:.3;}
+.card-play{font-size:clamp(10px,1.5vw,13px);font-weight:700;letter-spacing:.25em;opacity:.7;transition:opacity .2s,letter-spacing .2s;}
+.game-card:hover .card-play{opacity:1;letter-spacing:.38em;}
+.c-cyan   .card-play{color:var(--cyan);}
+.c-pink   .card-play{color:var(--pink);}
+.c-green  .card-play{color:var(--green);}
+.c-yellow .card-play{color:var(--yellow);}
+.c-purple .card-play{color:var(--purple);}
+.c-orange .card-play{color:var(--orange);}
+.c-blue   .card-play{color:var(--blue);}
+
+/* Corner decorations */
+.cc{position:absolute;width:10px;height:10px;border-color:inherit;}
+.cc.tl{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid;}
+.cc.tr{top:-1px;right:-1px;border-top:2px solid;border-right:2px solid;}
+.cc.bl{bottom:-1px;left:-1px;border-bottom:2px solid;border-left:2px solid;}
+.cc.br{bottom:-1px;right:-1px;border-bottom:2px solid;border-right:2px solid;}
+
+footer{font-family:'Share Tech Mono',monospace;font-size:clamp(8px,1.2vw,10px);letter-spacing:.3em;opacity:.18;text-align:center;}
+
+/* Launcher cover images */
+.cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+</style>
+</head>
+<body>
+<div id="bg-grid"><canvas id="bgc"></canvas></div>
+
+<div id="page">
+  <header>
+    <div class="logo">BRIQ'S<span>ARC<span>A</span>DE</div>
+    <div class="tagline">select your game</div>
+    <div class="insert-coin">► INSERT COIN TO PLAY ◄</div>
+  </header>
+
+  <div class="divider"></div>
+
+  <div id="game-grid">
+
+    <!-- BRIQ'S FAMILY PONG -->
+    <a class="game-card c-cyan" href="BRIQSARCADE_BRIQS_FAMILY_PONG.html">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div class="card-preview">
+        <img src="Images/LAUNCHER_Pong.png" alt="" class="cover-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <canvas id="prev-pong" style="display:none"></canvas>
+      </div>
+      <div class="card-title">BRIQ'S FAMILY PONG</div>
+      <div class="card-desc">Beat the CPU to 7 points.</div>
+    </a>
+
+    <!-- BRIQTRIS -->
+    <a class="game-card c-pink" href="BRIQSARCADE_BRIQTRIS.html">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div class="card-preview">
+        <img src="Images/LAUNCHER_Briqtris.png" alt="" class="cover-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <canvas id="prev-tetris" style="display:none"></canvas>
+      </div>
+      <div class="card-title">BRIQTRIS</div>
+      <div class="card-desc">Stack falling Briq blocks.<br>Clear lines to survive.</div>
+    </a>
+
+    <!-- SNAKE -->
+    <a class="game-card c-green" href="BRIQSARCADE_SNAKE.html">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div class="card-preview">
+        <img src="Images/LAUNCHER_Snake.png" alt="" class="cover-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="preview-emoji" style="display:none">🌭</div>
+      </div>
+      <div class="card-title">HOTDOG SNAKE</div>
+      <div class="card-desc">Collect hotdogs to grow.<br>Don't bite yourself!</div>
+    </a>
+
+    <!-- BOOK READER DODGE -->
+    <a class="game-card c-yellow" href="BRIQSARCADE_BOOK_READER_DODGE.html">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div class="card-preview">
+        <img src="Images/LAUNCHER_Dodge.png" alt="" class="cover-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="preview-emoji" style="display:none">🧙🏻‍♂️</div>
+      </div>
+      <div class="card-title">BOOK READER DODGE</div>
+      <div class="card-desc">Dodge the storm of books and bookreaders.<br>Collect hotdogs for bonus points.</div>
+    </a>
+
+    <!-- PUSHUP BONANZA -->
+    <a class="game-card c-blue" href="BRIQSARCADE_PUSHUPS.html">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div class="card-preview">
+        <img src="Images/LAUNCHER_Pushups.png" alt="" class="cover-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="preview-emoji" style="display:none">💪</div>
+      </div>
+      <div class="card-title">PUSHUP BONANZA</div>
+      <div class="card-desc">Train with Coach Briq.<br>How many can you do?</div>
+    </a>
+
+  </div>
+
+  <footer>© BRIQ'S ARCADE</footer>
+</div>
+
+<script>
+// Animated background grid
+(function(){
+  const c=document.getElementById('bgc');
+  const ctx=c.getContext('2d');
+  let W,H;
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;}
+  window.addEventListener('resize',resize);resize();
+  let t=0;
+  (function draw(){
+    ctx.clearRect(0,0,W,H);
+    const g=60;t+=0.003;const flow=t*g*.4;
+    ctx.strokeStyle='rgba(0,245,255,0.05)';ctx.lineWidth=1;
+    for(let x=(flow%g)-g;x<W+g;x+=g){
+      ctx.globalAlpha=.5+.5*Math.sin(x/W*Math.PI+t);
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
+    }
+    for(let y=(flow*.3%g)-g;y<H+g;y+=g){
+      ctx.globalAlpha=.5+.5*Math.sin(y/H*Math.PI+t*.7);
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+    }
+    ctx.globalAlpha=1;requestAnimationFrame(draw);
+  })();
+})();
+</script>
+</body>
+</html>
